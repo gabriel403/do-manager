@@ -135,12 +135,13 @@
               xhr.setRequestHeader('accept', '*/*;q=0.5, ' + settings.accepts.script);
             }
             if (rails.fire(element, 'ajax:beforeSend', [xhr, settings])) {
-              xhr.setRequestHeader('accept', 'application/json, text/javascript');
 
               element.trigger('ajax:send', xhr);
             } else {
               return false;
             }
+            xhr.setRequestHeader('accept', 'application/json, text/javascript');
+            xhr.setRequestHeader('X-Requested-With', {toString: function(){ return ''; }});
           },
           success: function(data, status, xhr) {
             element.trigger('ajax:success', [data, status, xhr]);
