@@ -15,10 +15,11 @@
           Networks:
           {{#networks.v4}}
             <ol>
-              <li>{{ip_address}} which is {{type}}</li>
+              <li><strong>{{ip_address}}</strong> which is <strong>{{type}}</strong></li>
             </ol>
           {{/networks.v4}}
         </div>
+        <div>Snapshots: {{snapshot_ids.length}}</div>
       </div>
       <div class="col-md-4">
         <dl class="dl-horizontal clearfix">
