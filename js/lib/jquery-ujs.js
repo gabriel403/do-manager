@@ -125,8 +125,6 @@
           data = element.data('params') || null;
         }
 
-        url += "?client_id=" + $('#clientID').val() + "&api_key=" + $('#apiKey').val()
-
         options = {
           type: method || 'GET', data: data, dataType: dataType,
           // stopping the "ajax:beforeSend" event will cancel the ajax request
@@ -142,6 +140,7 @@
             }
             xhr.setRequestHeader('accept', 'application/json, text/javascript');
             xhr.setRequestHeader('X-Requested-With', {toString: function(){ return ''; }});
+            xhr.setRequestHeader('Authorization',  "Bearer " + $('#oauthToken').val());
           },
           success: function(data, status, xhr) {
             element.trigger('ajax:success', [data, status, xhr]);
