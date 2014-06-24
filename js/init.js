@@ -10,7 +10,21 @@ $( document ).ready(function(){
 
   $('#list-droplets').on('ajax:success', function(ajax,response,status){
     console.log(response);
-    $.do.common.loadColumn('droplet', response.droplets);
+    $.do.common.loadColumn('droplet', response.droplets, 'central');
+  })
+
+  $('#list-images').on('ajax:success', function(ajax,response,status){
+    console.log(response);
+    var privimages = [];
+    var pubimages  = [];
+    $.each(response.images, function(index, image){
+      if (!image.public){
+        privimages.push(image);
+      } else {
+        pubimages.push(image);
+      }
+    })
+    $.do.common.loadColumn('imagesgroups', {privimages: privimages, pubimages: pubimages}, 'central');
   })
 
 });
@@ -18,18 +32,22 @@ $( document ).ready(function(){
 $.do = {};
 $.do.common = {};
 
-$.do.common.loadColumn = function(loaderType, data) {
+$.do.common.loadColumn = function(loaderType, data, destination) {
   if (data) {
-    $.do.common.columnMoustache(loaderType, data);
+    $.do.common.columnMoustache(loaderType, data, destination);
     return;
   }
 
   $.do.common.simpleGET(loaderType, {}, function(data, status, xhr) {
-    $.do.common.columnMoustache(loaderType, xhr.responseJSON);
+    $.do.common.columnMoustache(loaderType, xhr.responseJSON, destination);
   });
 }
 
-$.do.common.columnMoustache = function(loaderType, data) {
+$.do.common.columnMoustache = function(loaderType, data, destination) {
+  if (!destination) {
+    destination = loaderType;
+  }
+
   var fetchfrom = loaderType;
   if (data.length == 0) {
     fetchfrom = 'empty' + loaderType;
@@ -38,7 +56,7 @@ $.do.common.columnMoustache = function(loaderType, data) {
 
   $.Mustache.load("./templates/" + fetchfrom + ".html?cb="+(new Date().getTime()))
   .done(function () {
-    $('#' + loaderType + '-col').mustache(fetchfrom + "template", data);
-    $('#' + loaderType + '-col').trigger('do:' + loaderType + ':column:loaded');
+    $('#' + destination + '-col').mustache(fetchfrom + "template", data);
+    $('#' + destination + '-col').trigger('do:' + loaderType + ':column:loaded');
   });
 }
