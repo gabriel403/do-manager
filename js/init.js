@@ -27,6 +27,21 @@ $( document ).ready(function(){
     $.do.common.loadColumn('imagesgroups', {privimages: privimages, pubimages: pubimages}, 'central');
   })
 
+
+  $( document ).on('ajax:error', function(event, xhr, status) {
+    if ('unauthorized' == xhr.responseJSON.id) {
+      $('.navbar, .alert').css("opacity", "0.4");
+      var restoreLink = $("<a href='#' style='position: absolute; top: 0; right: 0; border: 0; z-index: 1050;'>Restore</a>");
+      restoreLink.on('click', function(){
+        $('.navbar, .alert').css("opacity", "1.0");
+        $('body').removeClass('unauthorized');
+        $(this).remove();
+      });
+      $('body').append(restoreLink);
+      $('body').addClass('unauthorized');
+    }
+  });
+
 });
 
 $.do = {};
