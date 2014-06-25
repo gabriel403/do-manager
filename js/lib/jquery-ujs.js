@@ -434,8 +434,5 @@
     });
   }
 
-  $( document ).on('ajax:error', function(xhr, status, error) {
-    // console.log(xhr.responseText)
-  });
 
 })( jQuery );

@@ -6,7 +6,7 @@
           {{name}}
         </h4>
         <div>
-          Using image <strong>{{image.name}}</strong> built from distribution <strong>{{image.distribution}}</strong>
+          Using image <strong>{{image.name}}</strong> built from distribution <strong>{{image.distribution}}</strong> running kernel {{kernel.name}}
         </div>
         <div>
           Hosted in <strong>{{region.name}}</strong> using a <strong>{{size.disk}}GB</strong> SSD & <strong>{{size.memory}}MB</strong> of RAM
@@ -33,5 +33,8 @@
         </dl>
       </div>
     </div>
+
+    <a href="https://api.digitalocean.com/v2/droplets/{{id}}" class="btn btn-danger" data-remote="true" data-type="json" data-with-credentials="true" data-method="delete" data-confirm="Are you sure?">Delete Droplet</a>
+
   </div>
 </script>

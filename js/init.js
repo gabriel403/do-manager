@@ -1,4 +1,10 @@
 $( document ).ready(function(){
+  $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+   var $target = $(event.currentTarget);
+   $target.closest('.dropdown')
+      .find('.toggle-text').text("List "+$target.text()).end().children('.dropdown-toggle').dropdown('toggle');
+  });
+
   $("#rememberCreds").on('change', function(e){
     $.cookie('do-oauth',   $('#oauthToken').val(),   { expires: 7, path: '/' });
   });
@@ -8,13 +14,11 @@ $( document ).ready(function(){
     $("#rememberCreds").prop('checked', true);
   }
 
-  $('#list-droplets').on('ajax:success', function(ajax,response,status){
-    console.log(response);
+  $('[name="list-droplets"]').on('ajax:success', function(ajax,response,status){
     $.do.common.loadColumn('droplet', response.droplets, 'central');
   })
 
-  $('#list-images').on('ajax:success', function(ajax,response,status){
-    console.log(response);
+  $('[name="list-images"]').on('ajax:success', function(ajax,response,status){
     var privimages = [];
     var pubimages  = [];
     $.each(response.images, function(index, image){
@@ -71,6 +75,7 @@ $.do.common.columnMoustache = function(loaderType, data, destination) {
 
   $.Mustache.load("./templates/" + fetchfrom + ".html?cb="+(new Date().getTime()))
   .done(function () {
+    $('#' + destination + '-col').empty();
     $('#' + destination + '-col').mustache(fetchfrom + "template", data);
     $('#' + destination + '-col').trigger('do:' + loaderType + ':column:loaded');
   });
