@@ -1,3 +1,7 @@
 .col-md-4 {
   padding: 0px;
 }
+
+.navbar-form label {
+  color: #fff;
+}
