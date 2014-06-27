@@ -16,12 +16,33 @@ $( document ).ready(function(){
 
   $('[name="list-droplets"]').on('ajax:success', function(ajax,response,status){
     $('#central-col').empty();
-    var createDropletButton = $('<button type="button" class="btn btn-info">Create Droplet</button>');
+    var createDropletButton = $('<p><button type="button" class="btn btn-info">Create Droplet</button></p>');
     createDropletButton.on('click', function(){
       // show newdroplet template in modal
-      $.do.common.loadColumn('newdroplet', [], 'central');
+      var datas = {};
+      $.do.common.simpleGET('https://api.digitalocean.com/v2/regions', {}, function(data, status, xhr){
+        datas.regions = data.regions;
+        $.do.common.simpleGET('https://api.digitalocean.com/v2/sizes',   {}, function(data, status, xhr){
+          datas.sizes = data.sizes;
+          $.do.common.loadColumn('newdroplet', datas, 'central-new-droplet');
+            $('#central-new-droplet-col').on('do:newdroplet:column:loaded', function(){
+              $('.popover-trigger').popover({});
+              $('input[name=region]').on('change', function(e){
+                $('input[name=region]').parent().find('.glyphicon').css("color", "white");
+                $('input[name=region]:checked').parent().find('.glyphicon').css("color", "red");
+              });
+
+              $('input[name=size]').on('change', function(e){
+                $('input[name=size]').parent().find('.glyphicon').css("color", "white");
+                $('input[name=size]:checked').parent().find('.glyphicon').css("color", "red");
+              });
+            });
+        });
+      });
+
     });
     $('#central-col').append(createDropletButton);
+    $('#central-col').append($('<p id="central-new-droplet-col"></p>'));
     $.do.common.loadColumn('droplet', response.droplets, 'central');
   })
 
@@ -61,8 +82,7 @@ $.do.common = {};
 
 $.do.common.loadColumn = function(loaderType, data, destination) {
   if (data) {
-    $.do.common.columnMoustache(loaderType, data, destination);
-    return;
+    return $.do.common.columnMoustache(loaderType, data, destination);
   }
 
   $.do.common.simpleGET(loaderType, {}, function(data, status, xhr) {
@@ -80,10 +100,47 @@ $.do.common.columnMoustache = function(loaderType, data, destination) {
   //   fetchfrom = 'empty' + loaderType;
     data.push({});
   }
-
+console.log(data);
   $.Mustache.load("./templates/" + fetchfrom + ".html?cb="+(new Date().getTime()))
   .done(function () {
     $('#' + destination + '-col').mustache(fetchfrom + "template", data);
     $('#' + destination + '-col').trigger('do:' + loaderType + ':column:loaded');
   });
+}
+
+$.do.common.simplePOST = function(location, data, successHandler, errorHandler) {
+  return $.do.common.simpleAJAX('POST', location, data, successHandler, errorHandler);
+}
+
+$.do.common.simpleGET = function(location, data, successHandler, errorHandler) {
+  return $.do.common.simpleAJAX('GET',  location, data, successHandler, errorHandler);
+}
+
+$.do.common.simpleAJAX = function(type, location, data, successHandler, errorHandler) {
+  if (!errorHandler) {
+    errorHandler = function(){};
+  }
+
+  if (!successHandler) {
+    successHandler = function(){};
+  }
+
+  options = {
+    url:        location,
+    type:       type,
+    dataType:   'json',
+    data:       data,
+    beforeSend: function(xhr, settings) {
+        xhr.setRequestHeader('accept', 'application/json, text/javascript');
+        xhr.setRequestHeader('Authorization',  "Bearer " + $('#oauthToken').val());
+    },
+    success:     successHandler,
+    error:       errorHandler,
+    crossDomain: true,
+    xhrFields:   {
+      withCredentials: true
+    }
+  };
+
+  return $.ajax(options)
 }

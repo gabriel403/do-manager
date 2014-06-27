@@ -17,3 +17,7 @@ body.unauthorized {
   -o-background-size: cover;
   background-size: cover;
 }
+
+.radio-inline+.radio-inline, .checkbox-inline+.checkbox-inline {
+  margin-left: 0px;
+}
