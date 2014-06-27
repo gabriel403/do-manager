@@ -11,7 +11,7 @@
 }
 
 body.unauthorized {
-  background: url('../images/401-2.jpg') no-repeat center center fixed;
+  background: url('../images/401.gif') no-repeat center center fixed;
   -moz-background-size: cover;
   -webkit-background-size: cover;
   -o-background-size: cover;

@@ -15,6 +15,13 @@ $( document ).ready(function(){
   }
 
   $('[name="list-droplets"]').on('ajax:success', function(ajax,response,status){
+    $('#central-col').empty();
+    var createDropletButton = $('<button type="button" class="btn btn-info">Create Droplet</button>');
+    createDropletButton.on('click', function(){
+      // show newdroplet template in modal
+      $.do.common.loadColumn('newdroplet', [], 'central');
+    });
+    $('#central-col').append(createDropletButton);
     $.do.common.loadColumn('droplet', response.droplets, 'central');
   })
 
@@ -28,6 +35,7 @@ $( document ).ready(function(){
         pubimages.push(image);
       }
     })
+    $('#central-col').empty();
     $.do.common.loadColumn('imagesgroups', {privimages: privimages, pubimages: pubimages}, 'central');
   })
 
@@ -69,13 +77,12 @@ $.do.common.columnMoustache = function(loaderType, data, destination) {
 
   var fetchfrom = loaderType;
   if (data.length == 0) {
-    fetchfrom = 'empty' + loaderType;
+  //   fetchfrom = 'empty' + loaderType;
     data.push({});
   }
 
   $.Mustache.load("./templates/" + fetchfrom + ".html?cb="+(new Date().getTime()))
   .done(function () {
-    $('#' + destination + '-col').empty();
     $('#' + destination + '-col').mustache(fetchfrom + "template", data);
     $('#' + destination + '-col').trigger('do:' + loaderType + ':column:loaded');
   });
