@@ -1,5 +1,14 @@
 $( document ).ready(function(){
-  $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+  if ($.cookie('do-hidebar')) {
+    $('#dismisser').closest('.well').addClass('hide');
+  }
+
+  $('#dismisser').on('click', function(){
+    $(this).closest('.well').addClass('hide');
+    $.cookie('do-hidebar',   true,   { expires: 7, path: '/' });
+  })
+
+  $(document.body).on('click', '.dropdown-menu li', function( event ) {
    var $target = $(event.currentTarget);
    $target.closest('.dropdown')
       .find('.toggle-text').text("List "+$target.text()).end().children('.dropdown-toggle').dropdown('toggle');
