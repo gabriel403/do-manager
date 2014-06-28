@@ -24,7 +24,7 @@ $( document ).ready(function(){
       return;
     }
 
-    var createDropletButton = $('<p><button type="button" class="btn btn-info">Create Droplet</button></p>');
+    var createDropletButton = $('<p id="createDroplet"><button type="button" class="btn btn-info">Create Droplet</button></p>');
     createDropletButton.on('click', $.do.newDroplet);
     $('#central-col').prepend(createDropletButton);
   });

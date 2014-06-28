@@ -25,31 +25,40 @@ $.do.newDroplet = function(){
 
         $.do.common.regionsSizes = datas;
         $.do.common.loadColumn('newdroplet', datas, 'central-new-droplet');
-          $('#central-new-droplet-col').on('do:newdroplet:column:loaded', function(){
-            $('.popover-trigger').popover({});
+        $('#central-new-droplet-col').on('do:newdroplet:column:loaded', function(){
+          $('#createDroplet').remove();
+          $('.popover-trigger').popover({});
 
-            $('input[name=region]').on('change', function(e){
-              $('input[name=size]').attr('disabled', false);
+          $('#new-droplet-form').on('ajax:success', function(ajax, response, status) {
+            $('#central-col').mustache("droplettemplate", [response.droplet], { method: 'prepend' });
 
-              // selecting a region will invalidate some sizes
-              $.each($.do.common.regionsSizes.regions, function(index, region){
-                if (region.slug == $('input[name=region]:checked').val()) {
-                  $('input[name=size]').not('input[name=size][value=' + region.sizes.join('],[value=') + ']').attr('disabled', true);
-                }
-              });
-            });
+            var successAlert = $('<div class="alert alert-success text-center fixed-vertical-mid alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>Successfully created new Droplet</div>');
+            $('body').append(successAlert);
+            $(this).parent().remove();
+          });
 
-            $('input[name=size]').on('change', function(e){
-              $('input[name=region]').attr('disabled', false);
+          $('input[name=region]').on('change', function(e){
+            $('input[name=size]').attr('disabled', false);
 
-              // selecting a size will invalidate some regions
-              $.each($.do.common.regionsSizes.sizes, function(index, size){
-                if (size.slug == $('input[name=size]:checked').val()) {
-                  $('input[name=region]').not('input[name=region][value=' + size.regions.join('],[value=') + ']').attr('disabled', true);
-                }
-              });
+            // selecting a region will invalidate some sizes
+            $.each($.do.common.regionsSizes.regions, function(index, region){
+              if (region.slug == $('input[name=region]:checked').val()) {
+                $('input[name=size]').not('input[name=size][value=' + region.sizes.join('],[value=') + ']').attr('disabled', true);
+              }
             });
           });
+
+          $('input[name=size]').on('change', function(e){
+            $('input[name=region]').attr('disabled', false);
+
+            // selecting a size will invalidate some regions
+            $.each($.do.common.regionsSizes.sizes, function(index, size){
+              if (size.slug == $('input[name=size]:checked').val()) {
+                $('input[name=region]').not('input[name=region][value=' + size.regions.join('],[value=') + ']').attr('disabled', true);
+              }
+            });
+          });
+        });
       });
     });
   });
