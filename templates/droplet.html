@@ -6,7 +6,7 @@
           {{name}}
         </h4>
         <div>
-          Using image <strong>{{image.name}}</strong> of distribution <strong>{{image.distribution}}</strong>
+          Using image <strong>{{image.name}}</strong> built from distribution <strong>{{image.distribution}}</strong> running kernel {{kernel.name}}
         </div>
         <div>
           Hosted in <strong>{{region.name}}</strong> using a <strong>{{size.disk}}GB</strong> SSD & <strong>{{size.memory}}MB</strong> of RAM
@@ -15,19 +15,26 @@
           Networks:
           {{#networks.v4}}
             <ol>
-              <li>{{ip_address}} which is {{type}}</li>
+              <li><strong>{{ip_address}}</strong> which is <strong>{{type}}</strong></li>
             </ol>
           {{/networks.v4}}
         </div>
       </div>
       <div class="col-md-4">
         <dl class="dl-horizontal clearfix">
-          <dt style="width: 50px;"><small>Locked</small></dt>
-          <dd style="margin-left: 70px;"><small>{{locked}}</small></dd>
-          <dt style="width: 50px;"><small>Status</small></dt>
-          <dd style="margin-left: 70px;"><small>{{status}}</small></dd>
+          <dt style="width: 120px;"><small>Locked</small></dt>
+          <dd style="margin-left: 130px;"><small>{{locked}}</small></dd>
+          <dt style="width: 120px;"><small>Status</small></dt>
+          <dd style="margin-left: 130px;"><small>{{status}}</small></dd>
+          <dt style="width: 120px;"><small>Snapshots</small></dt>
+          <dd style="margin-left: 130px;"><small>{{snapshot_ids.length}}</small></dd>
+          <dt style="width: 120px;"><small>Backups</small></dt>
+          <dd style="margin-left: 130px;"><small>{{backup_ids.length}}</small></dd>
         </dl>
       </div>
     </div>
+
+    <a href="https://api.digitalocean.com/v2/droplets/{{id}}" class="btn btn-danger" data-remote="true" data-type="json" data-with-credentials="true" data-method="delete" data-confirm="Are you sure?">Delete Droplet</a>
+
   </div>
 </script>
