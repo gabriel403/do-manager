@@ -16,6 +16,13 @@ $( document ).ready(function(){
 
   $('[name="list-droplets"]').on('ajax:success', function(ajax,response,status){
     $('#central-col').empty();
+    $('#central-col').append($('<p id="central-new-droplet-col"></p>'));
+    $.do.common.loadColumn('droplet', response.droplets, 'central');
+
+    if (!$.do.config.newdroplet ) {
+      return;
+    }
+
     var createDropletButton = $('<p><button type="button" class="btn btn-info">Create Droplet</button></p>');
     createDropletButton.on('click', function(){
       // show newdroplet template in modal
@@ -41,9 +48,7 @@ $( document ).ready(function(){
       });
 
     });
-    $('#central-col').append(createDropletButton);
-    $('#central-col').append($('<p id="central-new-droplet-col"></p>'));
-    $.do.common.loadColumn('droplet', response.droplets, 'central');
+    $('#central-col').prepend(createDropletButton);
   })
 
   $('[name="list-images"]').on('ajax:success', function(ajax,response,status){
