@@ -77,8 +77,6 @@ $( document ).ready(function(){
 
 });
 
-$.do = {};
-$.do.common = {};
 
 $.do.common.loadColumn = function(loaderType, data, destination) {
   if (data) {
