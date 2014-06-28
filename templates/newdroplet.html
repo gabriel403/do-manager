@@ -1,7 +1,8 @@
 <script id="newdroplettemplate" type="text/html">
-  <div class="modal-body">
+  <div class="well">
     <form id="new-droplet-form" class="form-horizontal" role="form" action="https://api.digitalocean.com/v2/droplets" method="post" data-remote="true" data-type="json" data-with-credentials="true">
       <input type="text" class="form-control" placeholder="Droplet Name" name="name" required autofocus>
+
       <p class="clearfix">
       {{#regions}}
       <label style="width: 31%" class="radio-inline">
@@ -10,6 +11,7 @@
       </label>
       {{/regions}}
       </p>
+
       <p class="clearfix">
       {{#sizes}}
       <label class="radio-inline">
@@ -18,7 +20,15 @@
       </label>
       {{/sizes}}
       </p>
-      <input type="text" class="form-control" placeholder="Image" name="image" required>
+
+      <p>
+        <select name="image" class="form-control" required>
+        {{#images}}
+          <option value="{{id}}">{{name}}</option>
+        {{/images}}
+        </select>
+      </p>
+
       <div class="checkbox">
         <label>
           <input type="checkbox" value="">

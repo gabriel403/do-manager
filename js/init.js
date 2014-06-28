@@ -23,73 +23,36 @@ $( document ).ready(function(){
     $("#rememberCreds").prop('checked', true);
   }
 
-  $('[name="list-droplets"]').on('ajax:success', function(ajax,response,status){
-    $('#central-col').empty();
-    $('#central-col').append($('<p id="central-new-droplet-col"></p>'));
-    $.do.common.loadColumn('droplet', response.droplets, 'central');
-
-    if (!$.do.config.newdroplet ) {
-      return;
-    }
-
-    var createDropletButton = $('<p><button type="button" class="btn btn-info">Create Droplet</button></p>');
-    createDropletButton.on('click', function(){
-      // show newdroplet template in modal
-      var datas = {};
-      $.do.common.simpleGET('https://api.digitalocean.com/v2/regions', {}, function(data, status, xhr){
-        datas.regions = data.regions;
-        $.do.common.simpleGET('https://api.digitalocean.com/v2/sizes',   {}, function(data, status, xhr){
-          datas.sizes = data.sizes;
-          $.do.common.loadColumn('newdroplet', datas, 'central-new-droplet');
-            $('#central-new-droplet-col').on('do:newdroplet:column:loaded', function(){
-              $('.popover-trigger').popover({});
-              $('input[name=region]').on('change', function(e){
-                $('input[name=region]').parent().find('.glyphicon').css("color", "white");
-                $('input[name=region]:checked').parent().find('.glyphicon').css("color", "red");
-              });
-
-              $('input[name=size]').on('change', function(e){
-                $('input[name=size]').parent().find('.glyphicon').css("color", "white");
-                $('input[name=size]:checked').parent().find('.glyphicon').css("color", "red");
-              });
-            });
-        });
-      });
-
-    });
-    $('#central-col').prepend(createDropletButton);
-  })
-
-  $('[name="list-images"]').on('ajax:success', function(ajax,response,status){
-    var privimages = [];
-    var pubimages  = [];
-    $.each(response.images, function(index, image){
-      if (!image.public){
-        privimages.push(image);
-      } else {
-        pubimages.push(image);
-      }
-    })
-    $('#central-col').empty();
-    $.do.common.loadColumn('imagesgroups', {privimages: privimages, pubimages: pubimages}, 'central');
-  })
-
-
-  $( document ).on('ajax:error', function(event, xhr, status) {
-    if ('unauthorized' == xhr.responseJSON.id) {
-      $('.navbar, .alert').css("opacity", "0.4");
-      var restoreLink = $("<a href='#' style='position: absolute; top: 0; right: 0; border: 0; z-index: 1050;'>Restore</a>");
-      restoreLink.on('click', function(){
-        $('.navbar, .alert').css("opacity", "1.0");
-        $('body').removeClass('unauthorized');
-        $(this).remove();
-      });
-      $('body').append(restoreLink);
-      $('body').addClass('unauthorized');
-    }
-  });
+  $(document).on('ajax:error', $.do.common.ajaxError);
+  $("ul[data-remote='true']").on('ajax:error', $.do.common.ajaxError);
 
 });
+
+$.do.common.ajaxError = function(event, xhr, status) {
+  console.log(xhr.responseJSON.id);
+  if ('unauthorized' == xhr.responseJSON.id) {
+    $.do.common.errorDisplay('unauthorized', xhr.responseJSON.message);
+    $('body').addClass('unauthorized');
+  } else if ('unprocessable_entity' == xhr.responseJSON.id) {
+    $.do.common.errorDisplay('unprocessable', xhr.responseJSON.message);
+    $('body').addClass('unprocessable');
+  }
+};
+
+$.do.common.errorDisplay = function(type, message) {
+  $('.navbar, .well').css("opacity", "0.4");
+  var errorAlert = $('<div class="alert alert-danger text-center fixed-vertical-mid" role="alert">' + message + '</div>');
+  $('body').append(errorAlert);
+
+  var restoreLink = $("<a href='#' class='restore-link'>Restore</a>");
+  restoreLink.on('click', function(){
+    $('.navbar, .well').css("opacity", "1.0");
+    $('body').removeClass(type);
+    $(this).remove();
+    errorAlert.remove();
+  });
+  $('body').append(restoreLink);
+}
 
 
 $.do.common.loadColumn = function(loaderType, data, destination) {
