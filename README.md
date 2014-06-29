@@ -26,4 +26,4 @@ gabriel at dixie-flatline in ~/Dropbox/code/do-manager on master
 $ python -m SimpleHTTPServer
 ```
 
-See #2 for todo list.
+See [#2](https://github.com/gabriel403/do-manager/issues/2) for todo list.
