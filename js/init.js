@@ -41,17 +41,19 @@ $.do.common.ajaxError = function(event, xhr, status) {
 
 $.do.common.errorDisplay = function(type, message) {
   $('.navbar, .well').css("opacity", "0.4");
-  var errorAlert = $('<div class="alert alert-danger text-center fixed-vertical-mid" role="alert">' + message + '</div>');
-  $('body').append(errorAlert);
+  var errorAlert = $.do.common.messageDisplay('danger', message)
 
-  var restoreLink = $("<a href='#' class='restore-link'>Restore</a>");
-  restoreLink.on('click', function(){
+  errorAlert.on('click', function(){
     $('.navbar, .well').css("opacity", "1.0");
     $('body').removeClass(type);
-    $(this).remove();
-    errorAlert.remove();
   });
-  $('body').append(restoreLink);
+}
+
+$.do.common.messageDisplay = function(type, message) {
+  var errorAlert = $('<div class="alert alert-' + type +' text-center fixed-vertical-mid" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>' + message + '</div>');
+  $('body').append(errorAlert);
+  $(this).remove();
+  return errorAlert;
 }
 
 

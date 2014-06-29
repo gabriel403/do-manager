@@ -3,6 +3,8 @@ $.do.newDroplet = function(){
   var datas = {};
   $.do.common.simpleGET('https://api.digitalocean.com/v2/images', {}, function(data, status, xhr){
     var images  = [];
+
+    // make our private images the first ones listed
     $.each(data.images, function(index, image){
       if (!image.public){
         images.push(image);
@@ -32,8 +34,13 @@ $.do.newDroplet = function(){
           $('#new-droplet-form').on('ajax:success', function(ajax, response, status) {
             $('#central-col').mustache("droplettemplate", [response.droplet], { method: 'prepend' });
 
-            var successAlert = $('<div class="alert alert-success text-center fixed-vertical-mid alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>Successfully created new Droplet</div>');
-            $('body').append(successAlert);
+            $.do.common.messageDisplay('success', 'Droplet created!');
+
+            $('.dlt-droplet').on('ajax:success', function() {
+              $.do.common.messageDisplay('success', 'Droplet deleted!');
+              $(this).closest('.well').remove();
+            });
+
             $(this).parent().remove();
           });
 
