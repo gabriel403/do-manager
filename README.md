@@ -14,6 +14,9 @@ account and enter the token in the input box at the top of the [DO Manager webpa
 
 Actions will become available as context changes.
 
+Want to contribute?
+===
+
 Feel free to fork and send in PRs, help appreciated!
 
 To run your own simply add a vhost for it, no dependencies required. In dev I simply use the python server.
@@ -22,3 +25,5 @@ To run your own simply add a vhost for it, no dependencies required. In dev I si
 gabriel at dixie-flatline in ~/Dropbox/code/do-manager on master
 $ python -m SimpleHTTPServer
 ```
+
+See #2 for todo list.
