@@ -18,5 +18,13 @@
         </dl>
       </div>
     </div>
+    <div class="clearfix row">
+      {{#regions}}
+      <label style="width: 31%" class="radio-inline">
+        <input type="radio" name="region" id="regionRadio{{name}}" value="{{slug}}">
+        <span class="glyphicon glyphicon-flag"> {{name}}</span>
+      </label>
+      {{/regions}}
+    </div>
   </div>
 </script>
