@@ -1,7 +1,7 @@
 $.do.newDroplet = function(){
   // show newdroplet template in modal
   var datas = {};
-  $.do.common.simpleGET('https://api.digitalocean.com/v2/images', {}, function(data, status, xhr){
+  $.do.common.simpleGET('https://api.digitalocean.com/v2/images?per_page=100', {}, function(data, status, xhr){
     var images  = [];
 
     // make our private images the first ones listed
