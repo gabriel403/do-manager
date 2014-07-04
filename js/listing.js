@@ -24,6 +24,11 @@ $( document ).ready(function(){
     $('#central-col').prepend(createDropletButton);
   });
 
+  $('[name="list-keys"]').on('ajax:success', function(ajax,response,status){
+    $('#central-col').empty();
+    $.do.common.loadColumn('keys', response.ssh_keys, 'central');
+  });
+
   $('.dlt-droplet').on('ajax:success', function() {
     $.do.common.messageDisplay('success', 'Droplet deleted!');
     $(this).closest('.well').remove();
