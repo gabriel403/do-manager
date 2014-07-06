@@ -58,16 +58,18 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <div class="navbar-right navbar-txt">Please consider donating<br>to help with hosting</div>
-          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="hidden" name="cmd" value="_s-xclick">
-              <input type="hidden" name="hosted_button_id" value="EVVTEY36UU3JU">
-              <input class="form-control paypal" type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-              <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-            </div>
-          </form>
-
+          <button type="button" class="btn btn-info navbar-right navbar-btn" id="paypal-popover-trigger" data-placement="bottom" data-toggle="popover">Want to donate?</button>
+          <div id="paypal-form" class="hidden">
+            Please consider donating to help with hosting
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="navbar-form navbar-right">
+              <div class="form-group">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="EVVTEY36UU3JU">
+                <input class="form-control paypal" type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+              </div>
+            </form>
+        </div>
           <form name='list-droplets' class="navbar-form navbar-right" role="search" method="get" action='https://api.digitalocean.com/v2/droplets/' data-remote="true" data-type="json" data-with-credentials="true">
             <div class="form-group">
               <label class="sr-only" for="oauthToken">OAuth Token</label>

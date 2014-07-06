@@ -1,4 +1,12 @@
 $( document ).ready(function(){
+  $('#paypal-popover-trigger').popover({
+    html : true,
+    content: function() {
+      return $('#paypal-form').html();
+    },
+    // container: 'paypal-popover-trigger'
+  });
+
   if ($.cookie('do-hidebar')) {
     $('#dismisser').closest('.well').addClass('hide');
   }
