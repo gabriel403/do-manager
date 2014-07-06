@@ -12,6 +12,10 @@ body {margin-top: 60px;}
   word-wrap:break-word;
 }
 
+.form-control.paypal {
+  background-color: transparent;
+}
+
 .no-top-space {
   padding-top: 0px !important;
   margin-top: 0px !important;
