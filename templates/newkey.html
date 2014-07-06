@@ -1,0 +1,13 @@
+<script id="newkeytemplate" type="text/html">
+  <div class="well">
+    <form id="new-key-form" class="form-horizontal" role="form" action="https://api.digitalocean.com/v2/account/keys" method="post" data-remote="true" data-type="json" data-with-credentials="true">
+      <p>
+        <input type="text" class="form-control" placeholder="Key Name" name="name" required autofocus>
+      </p>
+      <p>
+        <input type="text" class="form-control" placeholder="Public Key" name="public_key" required>
+      </p>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+    </form>
+  </div>
+</script>
