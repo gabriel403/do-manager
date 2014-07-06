@@ -16,6 +16,10 @@ body {margin-top: 60px;}
   background-color: transparent;
 }
 
+.navbar-brand, .navbar-txt {
+  padding-top: 6px;
+}
+
 .no-top-space {
   padding-top: 0px !important;
   margin-top: 0px !important;
