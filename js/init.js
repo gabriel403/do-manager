@@ -37,22 +37,24 @@ $( document ).ready(function(){
 });
 
 $.do.common.ajaxError = function(event, xhr, status) {
-  console.log(xhr.responseJSON.id);
   if ('unauthorized' == xhr.responseJSON.id) {
     $.do.common.errorDisplay('unauthorized', xhr.responseJSON.message);
     $('body').addClass('unauthorized');
   } else if ('unprocessable_entity' == xhr.responseJSON.id) {
     $.do.common.errorDisplay('unprocessable', xhr.responseJSON.message);
     $('body').addClass('unprocessable');
+  } else if ('not_found' == xhr.responseJSON.id) {
+    $.do.common.errorDisplay('notfound', xhr.responseJSON.message);
+    $('body').addClass('notfound');
   }
 };
 
 $.do.common.errorDisplay = function(type, message) {
-  $('.navbar, .well').css("opacity", "0.4");
+  $('.navbar, .well, .panel-group').css("opacity", "0.4");
   var errorAlert = $.do.common.messageDisplay('danger', message)
 
   errorAlert.on('click', function(){
-    $('.navbar, .well').css("opacity", "1.0");
+    $('.navbar, .well, .panel-group').css("opacity", "1.0");
     $('body').removeClass(type);
   });
 }

@@ -12,7 +12,14 @@ $( document ).ready(function(){
     });
     $('#central-col').empty();
     $.do.common.loadColumn('imagesgroups', {privimages: privimages, pubimages: pubimages}, 'central');
-  })
+  });
+
+  $( 'body' ).on("do:imagesgroups:column:loaded", function() {
+    $('.dlt-image').on('ajax:success', function() {
+      $.do.common.messageDisplay('success', 'Image deleted!');
+      $(this).closest('.alert').remove();
+    });
+  });
 
   $('[name="list-droplets"]').on('ajax:success', function(ajax,response,status){
     $('#central-col').empty();

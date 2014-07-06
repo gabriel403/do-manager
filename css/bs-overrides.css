@@ -8,6 +8,10 @@
 
 body {margin-top: 60px;}
 
+.alert a.btn {
+  text-decoration: none;
+}
+
 .word-wrap {
   word-wrap:break-word;
 }
