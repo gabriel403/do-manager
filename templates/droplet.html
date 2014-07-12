@@ -34,7 +34,29 @@
       </div>
     </div>
 
-    <a href="https://api.digitalocean.com/v2/droplets/{{id}}" class="btn btn-danger dlt-droplet" data-remote="true" data-type="json" data-with-credentials="true" data-method="delete" data-confirm="Are you sure?">Delete Droplet</a>
+    <p>
+      <a href="https://api.digitalocean.com/v2/droplets/{{id}}" class="btn btn-danger dlt-droplet pull-left" data-remote="true" data-type="json" data-with-credentials="true" data-method="delete" data-confirm="Are you sure?">Delete Droplet</a>
+      {{^locked}}
+      <form action="https://api.digitalocean.com/v2/droplets/{{id}}/actions" method="post" data-remote="true" data-type="json" data-with-credentials="true" class="form-inline pull-right droplet-action" role="form">
+          <select name="type" class="form-control" required>
+            {{#isPoweredOn}}
+            <option value="reboot">Reboot</option>
+            <option value="shutdown">Shutdown</option>
+            <option value="power_cycle">Force Power Off and On</option>
+            <option value="power_off">Force Power Off</option>
+            {{/isPoweredOn}}
+            {{^isPoweredOn}}
+            <option value="power_on">Power On</option>
+            {{/isPoweredOn}}
+            <option value="password_reset">Reset Root Password</option>
+            <option value="disable_backups">Disable Backups</option>
 
+          </select>
+          <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      {{/locked}}
+    </p>
+
+    <span class='clearfix'></span>
   </div>
 </script>

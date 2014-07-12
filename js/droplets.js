@@ -1,5 +1,11 @@
 $( document ).ready(function(){
   $('[name="list-droplets"]').on('ajax:success', function(ajax,response,status){
+    $.each(response.droplets, function(index, droplet){
+      // active, new is on
+      // off
+      droplet.isPoweredOn = (droplet.status !== "off");
+    });
+
     $('#central-col').empty();
     $('#central-col').append($('<p id="central-new-droplet-col"></p>'));
     $.do.common.loadColumn('droplet', response.droplets, 'central');
@@ -13,6 +19,10 @@ $( document ).ready(function(){
     $('.dlt-droplet').on('ajax:success', function() {
       $.do.common.messageDisplay('success', 'Droplet deleted!');
       $(this).closest('.well').remove();
+    });
+
+    $('.droplet-action').on('ajax:success', function(ajax,response,status) {
+      $.do.common.messageDisplay('success', 'Droplet ' + response.action.type.replace('_', ' ') + ' ' + response.action.status.replace('-', ' '));
     });
   });
 });
