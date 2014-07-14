@@ -26,4 +26,16 @@ gabriel at dixie-flatline in ~/Dropbox/code/do-manager on master
 $ python -m SimpleHTTPServer
 ```
 
-See [#2](https://github.com/gabriel403/do-manager/issues/2) for todo list.
+TODO:  
+- [x] list droplets
+- [x] delete droplets
+- [x] create droplets
+- [x] list images
+- [x] delete private images
+- [x] list ssh keys
+- [x] delete ssh keys
+- [x] create ssh keys
+- [ ] list regions
+- [ ] list sizes
+- [x] main droplet actions stuff
+- [ ] all the droplet actions stuff
