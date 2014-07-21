@@ -71,3 +71,17 @@ input[type="radio"][name="region"]:disabled + .glyphicon, input[type="radio"][na
   border: 0;
   z-index: 1050;
 }
+
+
+@media (max-width: 800px) {
+  .sub800 {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .sub1000 {
+    display: none;
+  }
+}
+
