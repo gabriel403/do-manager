@@ -10,6 +10,12 @@
           Zone File is propagating.
           {{/zone_file}}
         </div>
+        <div>
+          Records:
+          {{#dns}}
+            {{type}} record called {{name}} points to {{data}}<br>
+          {{/dns}}
+        </div>
       </div>
       <div class="col-md-4">
         <dl class="dl-horizontal clearfix">
