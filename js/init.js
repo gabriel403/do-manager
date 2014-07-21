@@ -53,17 +53,22 @@ $.do.common.errorDisplay = function(type, message) {
   $('.navbar, .well, .panel-group').css("opacity", "0.4");
   var errorAlert = $.do.common.messageDisplay('danger', message)
 
-  errorAlert.on('click', function(){
+  $(document).click(function() {
     $('.navbar, .well, .panel-group').css("opacity", "1.0");
     $('body').removeClass(type);
   });
 }
 
 $.do.common.messageDisplay = function(type, message) {
-  var errorAlert = $('<div class="alert alert-' + type +' text-center fixed-vertical-mid" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>' + message + '</div>');
-  $('body').append(errorAlert);
+  var messageAlert = $('<div class="alert alert-' + type +' text-center fixed-vertical-mid" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>' + message + '</div>');
+  $('body').append(messageAlert);
   $(this).remove();
-  return errorAlert;
+
+  $(document).click(function() {
+    $(messageAlert).fadeOut(300, function() { $(this).remove(); });
+  });
+
+  return messageAlert;
 }
 
 
