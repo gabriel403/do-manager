@@ -28,8 +28,12 @@
           <dd style="margin-left: 130px;"><small>{{status}}</small></dd>
           <dt style="width: 120px;"><small>Snapshots</small></dt>
           <dd style="margin-left: 130px;"><small>{{snapshot_ids.length}}</small></dd>
+          <dt style="width: 120px;"><small>Backups Enabled</small></dt>
+          <dd style="margin-left: 130px;"><small>{{backupsEnabled}}</small></dd>
+          {{#backupsEnabled}}
           <dt style="width: 120px;"><small>Backups</small></dt>
           <dd style="margin-left: 130px;"><small>{{backup_ids.length}}</small></dd>
+          {{/backupsEnabled}}
         </dl>
       </div>
     </div>

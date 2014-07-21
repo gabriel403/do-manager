@@ -4,6 +4,12 @@ $( document ).ready(function(){
       // active, new is on
       // off
       droplet.isPoweredOn = (droplet.status !== "off");
+
+      droplet.backupsEnabled = false;
+
+      if (droplet.features.indexOf('backups') > -1) {
+        droplet.backupsEnabled = true;
+      }
     });
 
     $('#central-col').empty();
