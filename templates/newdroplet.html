@@ -21,6 +21,15 @@
       {{/sizes}}
       </p>
 
+      <p class="clearfix">
+      {{#keys}}
+      <label class="checkbox-inline">
+        <input type="checkbox" name="ssh_keys[]" id="sshKey{{name}}" value="{{id}}" class="hidden">
+        <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="{{fingerprint}}"> {{name}}</span>
+      </label>
+      {{/keys}}
+      </p>
+
       <p>
         <select name="image" class="form-control" required>
         {{#images}}

@@ -49,7 +49,9 @@ input[type="radio"] + .glyphicon {
   padding-bottom: 3px;
 }
 
-input[type="radio"][name="region"]:checked + .glyphicon, input[type="radio"][name="size"]:checked + .glyphicon {
+input[type="radio"][name="region"]:checked + .glyphicon,
+input[type="radio"][name="size"]:checked + .glyphicon,
+input[type="checkbox"][name="sshkeys[]"]:checked + .glyphicon {
   color: red;
   padding-bottom: 1px;
 }
