@@ -1,4 +1,5 @@
 <script id="droplettemplate" type="text/html">
+  {{#droplets}}
   <div class="well">
     <div class="clearfix row">
       <div class="col-md-8">
@@ -9,15 +10,22 @@
           Using image <strong>{{image.name}}</strong> built from distribution <strong>{{image.distribution}}</strong> running kernel {{kernel.name}}
         </div>
         <div>
-          Hosted in <strong>{{region.name}}</strong> using a <strong>{{size.disk}}GB</strong> SSD & <strong>{{size.memory}}MB</strong> of RAM
+          Hosted in <strong>{{region.name}}</strong> using a <strong>{{disk}}GB</strong> SSD & <strong>{{memory}}MB</strong> of RAM
         </div>
         <div>
-          Networks:
+          Networks:<br>
+          ipv4<br>
           {{#networks.v4}}
             <ol>
               <li><strong>{{ip_address}}</strong> which is <strong>{{type}}</strong></li>
             </ol>
           {{/networks.v4}}
+          ipv6<br>
+          {{#networks.v6}}
+            <ol>
+              <li><strong>{{ip_address}}</strong> which is <strong>{{type}}</strong></li>
+            </ol>
+          {{/networks.v6}}
         </div>
       </div>
       <div class="col-md-4">
@@ -50,12 +58,25 @@
             <option value="power_off">Force Power Off</option>
             {{/isPoweredOn}}
             {{^isPoweredOn}}
+            <option value="resize">Resize</option>
             <option value="power_on">Power On</option>
             {{/isPoweredOn}}
             <option value="password_reset">Reset Root Password</option>
             <option value="disable_backups">Disable Backups</option>
 
           </select>
+          <br>
+          {{^isPoweredOn}}
+            <label for="size">If resizing droplet, pick the size you wish to resize to</label>
+            <br>
+            <select name="size" class="form-control">
+            {{#sizes}}
+              <option value="{{slug}}">{{slug}}</option>
+            {{/sizes}}
+            </select>
+            <p></p>
+          {{/isPoweredOn}}
+
           <button type="submit" class="btn btn-default">Submit</button>
       </form>
       {{/locked}}
@@ -63,4 +84,5 @@
 
     <span class='clearfix'></span>
   </div>
+  {{/droplets}}
 </script>

@@ -1,20 +1,26 @@
 $( document ).ready(function(){
-  $('[name="list-droplets"]').on('ajax:success', function(ajax,response,status){
-    $.each(response.droplets, function(index, droplet){
-      // active, new is on
-      // off
-      droplet.isPoweredOn = (droplet.status !== "off");
+  var datas = {};
+  $('[name="list-droplets"]').on('ajax:success', function(ajax, response, status){
+    datas.droplets = response.droplets
+    $.do.common.simpleGET('https://api.digitalocean.com/v2/sizes', {}, function(data, status, xhr){
+      datas.sizes = data.sizes;
 
-      droplet.backupsEnabled = false;
+      $.each(datas.droplets, function(index, droplet){
+        // active, new is on
+        // off
+        droplet.isPoweredOn = (droplet.status !== "off");
 
-      if (droplet.features.indexOf('backups') > -1) {
-        droplet.backupsEnabled = true;
-      }
+        droplet.backupsEnabled = false;
+
+        if (droplet.features.indexOf('backups') > -1) {
+          droplet.backupsEnabled = true;
+        }
+      });
+
+      $('#central-col').empty();
+      $('#central-col').append($('<p id="central-new-droplet-col"></p>'));
+      $.do.common.loadColumn('droplet', datas, 'central');
     });
-
-    $('#central-col').empty();
-    $('#central-col').append($('<p id="central-new-droplet-col"></p>'));
-    $.do.common.loadColumn('droplet', response.droplets, 'central');
   });
 
   $( 'body' ).on("do:droplet:column:loaded", function() {
