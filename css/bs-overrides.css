@@ -51,7 +51,8 @@ input[type="radio"] + .glyphicon {
 
 input[type="radio"][name="region"]:checked + .glyphicon,
 input[type="radio"][name="size"]:checked + .glyphicon,
-input[type="checkbox"][name="sshkeys[]"]:checked + .glyphicon {
+input[type="checkbox"][name="sshkeys[]"]:checked + .glyphicon,
+input[type="checkbox"][name="ipv6"]:checked + .glyphicon {
   color: red;
   padding-bottom: 1px;
 }
