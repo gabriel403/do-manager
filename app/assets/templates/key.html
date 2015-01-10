@@ -1,0 +1,20 @@
+<script id="keytemplate" type="text/html">
+<div class="well">
+  <div class="clearfix row">
+    <div class="col-md-12 word-wrap no-top-space">
+      <h2 class='no-top-space'>
+        {{name}}
+      </h2>
+      <p>
+        Fingerprint:
+        <pre>{{fingerprint}}</pre>
+      </p>
+      <p>
+        Public Key:
+        <pre>{{public_key}}</pre>
+      </p>
+    </div>
+  </div>
+  <a href="https://api.digitalocean.com/v2/account/keys/{{id}}" class="btn btn-danger dlt-key" data-remote="true" data-type="json" data-with-credentials="true" data-method="delete" data-confirm="Are you sure?">Delete Key</a>
+</div>
+</script>

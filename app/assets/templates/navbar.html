@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <div class='center-block'>
+      <a href="/" class="navbar-brand">Welcome to the <br>Digital Ocean Manager</a>
+    </div>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    {{rateLimit.limit}}
+    <form name='list-droplets' class="navbar-form navbar-right" role="search" method="get" action='https://api.digitalocean.com/v2/droplets/' data-remote="true" data-type="json" data-with-credentials="true">
+      <div class="form-group">
+        <label class="sr-only" for="oauthToken">OAuth Token</label>
+        <input type="text" class="form-control" ng-model="auth.personalToken" ng-keyup="updateAuth(personalToken)" placeholder="Enter OAuth Token" style="width: 275px;" autocomplete="off">
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="rememberCreds" ng-model="auth.toggleAuthStorage" ng-click="storeAuth()"> remember these
+        </label>
+      </div>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='toggle-text'>List What?</span> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a name="list-droplets" href='#/droplets' data-remote="true" data-type="json" data-with-credentials="true">Droplets</a></li>
+          <li><a name="list-images" href='https://api.digitalocean.com/v2/images/?per_page=100' data-remote="true" data-type="json" data-with-credentials="true">Images</a></li>
+          <li><a name="list-keys" href='https://api.digitalocean.com/v2/account/keys/' data-remote="true" data-type="json" data-with-credentials="true">Keys</a></li>
+          <li><a name="list-domains" href='https://api.digitalocean.com/v2/domains/' data-remote="true" data-type="json" data-with-credentials="true">Domains</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+
+</div><!-- /.container -->

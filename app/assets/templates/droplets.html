@@ -1,0 +1,70 @@
+<div class="well" ng-repeat="droplet in droplets">
+  <div class="clearfix row">
+    <div class="col-md-8">
+      <h4>
+        {{droplet.name}}
+      </h4>
+      <div>
+        Using image <strong>{{droplet.image.name}}</strong> built from distribution <strong>{{droplet.image.distribution}}</strong> running kernel {{droplet.kernel.name}}
+      </div>
+      <div>
+        Hosted in <strong>{{droplet.region.name}}</strong> using a <strong>{{droplet.disk}}GB</strong> SSD & <strong>{{droplet.memory}}MB</strong> of RAM
+      </div>
+      <div>
+        Networks:<br>
+        <div ng-repeat="(type,networks) in droplet.networks">
+          ip{{type}}<br>
+          <span ng-if="networks.length==0">No networks assigned</span>
+          <ol>
+            <li ng-repeat="network in networks">
+              <strong>{{network.ip_address}}</strong> which is <strong>{{network.type}}</strong>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <dl class="dl-horizontal clearfix">
+        <dt style="width: 120px;"><small>Locked</small></dt>
+        <dd style="margin-left: 130px;"><small>{{droplet.locked}}</small></dd>
+        <dt style="width: 120px;"><small>Status</small></dt>
+        <dd style="margin-left: 130px;"><small>{{droplet.status}}</small></dd>
+        <dt style="width: 120px;"><small>Snapshots</small></dt>
+        <dd style="margin-left: 130px;"><small>{{droplet.snapshot_ids.length}}</small></dd>
+        <dt style="width: 120px;"><small>Backups Enabled</small></dt>
+        <dd style="margin-left: 130px;"><small>{{droplet.backup_ids.length>0}}</small></dd>
+        <dt ng-if="droplet.backup_ids.length>0" style="width: 120px;"><small>Backups</small></dt>
+        <dd ng-if="droplet.backup_ids.length>0" style="margin-left: 130px;"><small>{{droplet.backup_ids.length}}</small></dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <div class="row">
+        <div class="col-md-12">
+          <form ng-if="!droplet.locked" ng-submit="submitActionForm(actionForm.$valid, droplet.actionType, droplet.id)" name="actionForm" method="post" class="form-inline droplet-action" role="form">
+              <div class="form-group">
+                <select ng-model="droplet.actionType" ng-options="actionOption.name for actionOption in droplet.actionOptions" class="form-control" required style="width: 100%"></select>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-default" ng-disabled="actionForm.$invalid || actionForm.$pristine" style="width: 100%">Submit</button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <a href="#/droplets/delete/{{droplet.id}}" class="btn btn-danger dlt-droplet" data-remote="true" data-type="json" data-with-credentials="true" data-method="delete" data-confirm="Are you sure?" style="width: 100%">Delete Droplet</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 col-md-offset-2" style="height: 100px;">
+      <div class="row" ng-repeat="action in droplet.actions">
+        <div class="col-md-2 col-md-offset-2">{{action.type}}</div>
+        <div class="col-md-2">{{action.status}}</div>
+        <div class="col-md-3">{{action.started_at}}</div>
+        <div class="col-md-3">{{action.completed_at}}</div>
+      </div>
+    </div>
+  </div>
+</div>

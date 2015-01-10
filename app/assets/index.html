@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="dom">
+  <head>
+    <meta charset="utf-8">
+    <title>DigitalOcean Manager</title>
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <script src="/js/vendor.js"></script>
+    <script src="/js/app.js"></script>
+    <link rel="icon" href="/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="NavbarController" x-ng-include="'templates/navbar.html'"></nav>
+    <div data-status-alert style="z-index: 9000;"></div>
+    <div class="well well-sm text-center">
+      By using this website you agree that if anything fucks up it's your own fault.&nbsp;&nbsp;Also we use cookies, sometimes, depends really.
+      <button id='dismisser' type="button" class="btn btn-primary btn-xs pull-right">Dismiss</button>
+    </div>
+    <div class="container">
+      <div id='main-app'>
+        <div class='alert alert-info alert-dismissible hidden' role='alert' data-loading-indicator>Loading...</div>
+        <div class="row" ng-view data-post-loading-indicator>
+          If you can see this, something's probably broken
+        </div>
+      </div>
+    </div>
+
+    <a class="sub800" href="https://github.com/gabriel403/do-manager"><img style="position: absolute; top: 0; left: 0; border: 0; z-index: 1050;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+  </body>
+</html>

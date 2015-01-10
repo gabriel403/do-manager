@@ -1,0 +1,57 @@
+<script id="newdroplettemplate" type="text/html">
+  <div class="well">
+    <form id="new-droplet-form" class="form-horizontal" role="form" action="https://api.digitalocean.com/v2/droplets" method="post" data-remote="true" data-type="json" data-with-credentials="true">
+      <input type="text" class="form-control" placeholder="Droplet Name" name="name" required autofocus>
+
+      <p class="clearfix">
+      {{#regions}}
+      <label style="width: 31%" class="radio-inline">
+        <input type="radio" name="region" id="regionRadio{{name}}" value="{{slug}}" class="hidden">
+        <span class="glyphicon glyphicon-flag"> {{name}}</span>
+      </label>
+      {{/regions}}
+      </p>
+
+      <p class="clearfix">
+      {{#sizes}}
+      <label class="radio-inline">
+        <input type="radio" name="size" id="regionSize{{name}}" value="{{slug}}" class="hidden">
+        <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="Provides {{disk}}GB SSD & {{memory}}MB of RAM at ${{price_monthly}}/m"> {{slug}}</span>
+      </label>
+      {{/sizes}}
+      </p>
+
+      <p class="clearfix">
+      {{#keys}}
+      <label class="checkbox-inline">
+        <input type="checkbox" name="ssh_keys[]" id="sshKey{{name}}" value="{{id}}" class="hidden">
+        <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="{{fingerprint}}"> {{name}}</span>
+      </label>
+      {{/keys}}
+      </p>
+
+      <p class="clearfix">
+      <label class="checkbox-inline">
+        <input type="checkbox" name="ipv6" id="ipv6" value="true" class="hidden">
+        <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="Enabled ipv6 on droplet?">ipv6</span>
+      </label>
+      </p>
+
+      <p>
+        <select name="image" class="form-control" required>
+        {{#images}}
+          <option value="{{id}}">{{name}}</option>
+        {{/images}}
+        </select>
+      </p>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="">
+          Backups Enabled
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+    </form>
+  </div>
+</script>
