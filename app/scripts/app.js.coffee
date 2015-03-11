@@ -118,6 +118,19 @@
   };
 ]);
 
+@dom.directive('ngConfirmClick', ->
+    return {
+      link: (scope, element, attr) ->
+        msg = attr.ngConfirmClick || "Are you sure?";
+        clickAction = attr.ngClick;
+        element.bind('click', (e) ->
+          scope.$eval(clickAction) if window.confirm(msg)
+          e.stopImmediatePropagation();
+          e.preventDefault();
+        );
+    };
+);
+
 @dom.directive("statusAlert", ['$rootScope', '$timeout', 'BroadcastService', ($rootScope, $timeout, BroadcastService) ->
   $rootScope.errorMessage = '...'
   $rootScope.successMessage = '...'

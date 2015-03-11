@@ -23,7 +23,7 @@ To run your own simply add a vhost for it, no dependencies required. In dev I si
 
 ```
 gabriel at dixie-flatline in ~/Dropbox/code/do-manager on master
-$ python -m SimpleHTTPServer
+$ npm start
 ```
 
 See [#2](https://github.com/gabriel403/do-manager/issues/2) for todo list.

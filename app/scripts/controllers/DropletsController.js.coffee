@@ -1,5 +1,9 @@
-@dom.controller 'DropletsController', ['$scope', '$timeout', '$route', 'Droplets', 'DropletActions', 'BroadcastService', ($scope, $timeout, $route, Droplets, DropletActions, BroadcastService) ->
+@dom.controller 'DropletsController', ['$scope', '$timeout', '$route', 'Droplets', 'DropletActions', 'Images', 'BroadcastService', ($scope, $timeout, $route, Droplets, DropletActions, Images, BroadcastService) ->
   $scope.droplets = []
+  $scope.droplet  = {}
+
+  Images.query {'private': true}, (data) ->
+    $scope.privateImages = data.images
 
   $scope.dropletUpdate = ->
     Droplets.query((data) ->
@@ -18,6 +22,7 @@
 
         droplet.actionOptions.push({value: 'password_reset', name: 'Reset Root Password'})
         droplet.actionOptions.push({value: 'disable_backups', name: 'Disable Backups'})
+        droplet.actionOptions.push({value: 'rebuild', name: 'Rebuild from Image'})
 
 
         DropletActions.query({droplet_id: droplet.id, page: 1, per_page: 5}, (response) ->
@@ -37,6 +42,7 @@
           if sdroplet.id is droplet.id
             dropletFound = true
         )
+
         if !dropletFound
           $scope.droplets.push(droplet)
       )
@@ -45,15 +51,31 @@
         $timeout( $scope.dropletUpdate, 30000 )
     )
 
-  $scope.submitActionForm = (isValid, actionType, dropletId) ->
+  $scope.submitActionForm = (isValid, droplet) ->
+    return unless isValid
+
+    dropletActionValues = { type: droplet.actionType.value }
+
+    dropletActionValues.image = droplet.image.id if droplet.actionType.value is 'rebuild'
+    console.log dropletActionValues
+    DropletActions.save({droplet_id: droplet.id}, {type: droplet.actionType.value}, (response) ->
+      BroadcastService('xhr-success', response.action.type+" "+response.action.status)
+      droplet.actions.push(response.action)
+      droplet.actionType = {}
+    )
+
+  $scope.deleteVm = (dropletId) ->
     angular.forEach($scope.droplets, (droplet) ->
-      if 'actionType' of droplet and 'value' of droplet.actionType
-        DropletActions.save({droplet_id: droplet.id}, {type: droplet.actionType.value}, (response) ->
-          BroadcastService('xhr-success', response.action.type+" "+response.action.status)
-          droplet.actions.push(response.action)
-          droplet.actionType = {}
+      if droplet.id is dropletId
+        Droplets.delete({id: dropletId}, {}, (stuff) ->
+          console.log stuff
+          angular.forEach($scope.droplets, (droplet2, key) ->
+            $scope.droplets.splice(key, 1) if droplet2.id is droplet.id
+          )
         )
     )
+
+
 
   $scope.dropletUpdate()
 ]
