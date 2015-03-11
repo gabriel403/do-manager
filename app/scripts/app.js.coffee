@@ -11,7 +11,7 @@
 @dom.factory('myHttpInterceptor', ['$q', '$rootScope', 'BroadcastService', 'RateLimitService', ($q, $rootScope, BroadcastService, RateLimitService) ->
   return {
     response: (response) ->
-      console.log(RateLimitService)
+      # console.log(RateLimitService)
       ratelimit = response.headers('ratelimit-remaining')
       RateLimitService(ratelimit)
       response || $q.when response
@@ -51,6 +51,10 @@
     when('/droplets', {
       templateUrl: '../templates/droplets.html',
       controller: 'DropletsController'
+    }).
+    when('/droplets/new', {
+      templateUrl: '../templates/droplets-new.html',
+      controller: 'DropletsNewController'
     }).
     otherwise({
       templateUrl: '../templates/home.html',
