@@ -1,0 +1,52 @@
+<div class="well">
+  <form id="new-droplet-form" class="form-horizontal" role="form" action="https://api.digitalocean.com/v2/droplets" method="post">
+    <input type="text" class="form-control" placeholder="Droplet Name" name="name" required autofocus ng-model="droplet.name">
+
+    <div class="row"><div class="col-sm-12">Regions</div></div>
+    <div class="row">
+      <div class="col-sm-4" ng-repeat="region in regions">
+        <label class="radio-inline">
+          <input type="radio" name="region" id="regionRadio{{name}}" value="{{slug}}" class="hidden" ng-model="droplet.region">
+          <span class="glyphicon glyphicon-flag"> {{region.name}}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="row"><div class="col-sm-12">Sizes</div></div>
+    <div class="row">
+      <div class="col-sm-4" ng-repeat="size in sizes">
+        <label class="radio-inline">
+          <input type="radio" name="size" id="regionSize{{size.name}}" value="{{size.slug}}" class="hidden" ng-model="droplet.size">
+          <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="Provides {{size.disk}}GB SSD & {{size.memory}}MB of RAM at ${{size.price_monthly}}/m"> {{size.slug}}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="row"><div class="col-sm-12">Keys</div></div>
+    <div class="row">
+      <label class="checkbox-inline" ng-repeat="key in keys">
+        <input type="checkbox" name="ssh_keys[]" id="sshKey{{name}}" value="{{id}}" class="hidden" ng-model="droplet.key">
+        <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="{{fingerprint}}"> {{name}}</span>
+      </label>
+    </div>
+
+    <p class="clearfix">
+    <label class="checkbox-inline">
+      <input type="checkbox" name="ipv6" id="ipv6" value="true" class="hidden">
+      <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="Enabled ipv6 on droplet?">ipv6</span>
+    </label>
+    </p>
+
+    <p>
+      <select name="image" class="form-control" ng-options="image.name for image in images" required></select>
+    </p>
+
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="">
+        Backups Enabled
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+  </form>
+</div>
