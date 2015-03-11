@@ -44,6 +44,10 @@
 
 @dom.config(['$routeProvider', ($routeProvider) ->
   $routeProvider.
+    when('/images', {
+      templateUrl: '../templates/images.html',
+      controller: 'ImagesController'
+    }).
     when('/droplets', {
       templateUrl: '../templates/droplets.html',
       controller: 'DropletsController'
@@ -60,6 +64,18 @@
 
 @dom.factory('DropletActions', ['$resource', '$http', ($resource, $http) ->
   return $resource('https://api.digitalocean.com/v2/droplets/:droplet_id/actions', null, {'update': { method:'PUT' }, 'query': {isArray:false}});
+]);
+
+@dom.factory('Regions', ['$resource', '$http', ($resource, $http) ->
+  return $resource('https://api.digitalocean.com/v2/regions', null, {'query': {isArray:false}});
+]);
+
+@dom.factory('Sizes', ['$resource', '$http', ($resource, $http) ->
+  return $resource('https://api.digitalocean.com/v2/sizes', null, {'query': {isArray:false}});
+]);
+
+@dom.factory('Images', ['$resource', '$http', ($resource, $http) ->
+  return $resource('https://api.digitalocean.com/v2/images', null, {'query': {isArray:false}});
 ]);
 
 @dom.service('BroadcastService', ['$rootScope', ($rootScope) ->
