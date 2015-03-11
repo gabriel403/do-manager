@@ -1,4 +1,3 @@
-<script id="imagesgroupstemplate" type="text/html">
 <div class="panel-group" id="accordion">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -10,35 +9,32 @@
     </div>
     <div id="privImages" class="panel-collapse collapse in">
       <div class="panel-body">
-        {{#privimages}}
-        <div class="alert alert-info">
+        <div class="alert alert-info" ng-repeat="image in privateImages">
           <div class="clearfix row">
             <div class="col-md-8">
               <h4>
-                {{name}}
+                {{image.name}}
               </h4>
               <div>
-                Image named <strong>{{name}}</strong> built from distribution <strong>{{distribution}}</strong>
+                Image named <strong>{{image.name}}</strong> built from distribution <strong>{{image.distribution}}</strong>
               </div>
             </div>
             <div class="col-md-4">
               <dl class="dl-horizontal clearfix">
                 <dt style="width: 50px;"><small>Public</small></dt>
-                <dd style="margin-left: 70px;"><small>{{public}}</small></dd>
+                <dd style="margin-left: 70px;"><small>{{image.public}}</small></dd>
                 <dt style="width: 50px;"><small>Slug</small></dt>
-                <dd style="margin-left: 70px;"><small>{{slug}}</small></dd>
+                <dd style="margin-left: 70px;"><small>{{image.slug}}</small></dd>
               </dl>
             </div>
           </div>
 
           <div class="clearfix row">
             <div class="col-md-12">
-              {{#regions}}
-              <span style="width: 31%" class="glyphicon glyphicon-flag"> {{.}}</span>
-              {{/regions}}
+              <span style="width: 31%" class="glyphicon glyphicon-flag" ng-repeat="region in image.regions"> {{region}}</span>
             </div>
           </div>
-
+<!--
           <form action="https://api.digitalocean.com/v2/images/{{id}}/actions" method="post" data-remote="true" data-type="json" data-with-credentials="true" class="form-inline droplet-action" role="form">
             <div class="clearfix row">
               <div class="col-md-12">
@@ -64,14 +60,13 @@
                 {{/globalregions}}
               </div>
             </div>
-          </form>
+          </form> -->
 
         </div>
-        {{/privimages}}
       </div>
     </div>
   </div>
-  <div class="panel panel-default">
+<!--   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#pubImages">
@@ -116,6 +111,5 @@
         {{/pubimages}}
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
-</script>
