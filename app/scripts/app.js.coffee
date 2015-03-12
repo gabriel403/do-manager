@@ -11,7 +11,6 @@
 @dom.factory('myHttpInterceptor', ['$q', '$rootScope', 'BroadcastService', 'RateLimitService', ($q, $rootScope, BroadcastService, RateLimitService) ->
   return {
     response: (response) ->
-      # console.log(RateLimitService)
       ratelimit = response.headers('ratelimit-remaining')
       RateLimitService(ratelimit)
       response || $q.when response
@@ -79,7 +78,11 @@
 ]);
 
 @dom.factory('Images', ['$resource', '$http', ($resource, $http) ->
-  return $resource('https://api.digitalocean.com/v2/images', null, {'query': {isArray:false}});
+  return $resource('https://api.digitalocean.com/v2/images/:id', null, {'query': {isArray:false}});
+]);
+
+@dom.factory('ImageActions', ['$resource', '$http', ($resource, $http) ->
+  return $resource('https://api.digitalocean.com/v2/images/:id/actions', null, {'update': { method:'PUT' }, 'query': {isArray:false}});
 ]);
 
 @dom.service('BroadcastService', ['$rootScope', ($rootScope) ->
@@ -144,6 +147,7 @@
         callback = -> $(".alert-dismissible").slideUp(500, -> BroadcastService('alert-hidden'); $(this).remove();)
         setTimeout callback, 5000
       )
+
       scope.$on('xhr-success', (e, message) ->
         $rootScope.successMessage = message
         template =  "<div class='alert alert-success alert-dismissible status-alerts' role='alert'>
@@ -158,3 +162,14 @@
       )
   };
 ]);
+
+@dom.filter('regionValidForImageTransfer', ->
+  (regions, image) ->
+    retRegions = []
+
+    for i in [0...regions.length]
+      if image.regions.indexOf(regions[i].slug) == -1 and regions[i].available
+        retRegions.push(regions[i])
+
+    return retRegions
+);
