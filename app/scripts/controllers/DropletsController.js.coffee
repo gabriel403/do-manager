@@ -58,7 +58,7 @@
 
     dropletActionValues.image = droplet.image.id if droplet.actionType.value is 'rebuild'
     console.log dropletActionValues
-    DropletActions.save({droplet_id: droplet.id}, {type: droplet.actionType.value}, (response) ->
+    DropletActions.save({droplet_id: droplet.id}, dropletActionValues, (response) ->
       BroadcastService('xhr-success', response.action.type+" "+response.action.status)
       droplet.actions.push(response.action)
       droplet.actionType = {}
