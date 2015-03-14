@@ -1,4 +1,4 @@
-@dom = angular.module('dom', ['ngRoute','ngResource','ngCookies','ngStorage'])
+@dom = angular.module('dom', ['ngRoute','ngResource','ngCookies','ngStorage', 'ui.bootstrap'])
 
 @dom.service('RateLimitService', ['BroadcastService', (BroadcastService) ->
     rateLimit = 1200;

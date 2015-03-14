@@ -1,52 +1,54 @@
 <div class="well">
-  <form id="new-droplet-form" class="form-horizontal" role="form" action="https://api.digitalocean.com/v2/droplets" method="post">
-    <input type="text" class="form-control" placeholder="Droplet Name" name="name" required autofocus ng-model="droplet.name">
+  <form name="nuDroplet" role="form" ng-submit="submitForm(nuDroplet.$valid)" novalidate>
+    <input type="text" class="form-control" placeholder="Droplet Name" ng-model="droplet.name" autocomplete="off" autofocus required>
 
     <div class="row"><div class="col-sm-12">Regions</div></div>
     <div class="row">
-      <div class="col-sm-4" ng-repeat="region in regions">
-        <label class="radio-inline">
-          <input type="radio" name="region" id="regionRadio{{name}}" value="{{slug}}" class="hidden" ng-model="droplet.region">
-          <span class="glyphicon glyphicon-flag"> {{region.name}}</span>
+      <div class="col-sm-2" ng-repeat="region in regions">
+        <label class="btn" ng-model="droplet.region" btn-radio="'{{region.slug}}'" style="width: 100%; color: #000!important;" ng-class="{'btn-info':droplet.region==region.slug}" required>
+          <span class="glyphicon glyphicon-flag popover-trigger">
+            {{region.slug}}
+          </span>
         </label>
       </div>
     </div>
 
     <div class="row"><div class="col-sm-12">Sizes</div></div>
     <div class="row">
-      <div class="col-sm-4" ng-repeat="size in sizes">
-        <label class="radio-inline">
-          <input type="radio" name="size" id="regionSize{{size.name}}" value="{{size.slug}}" class="hidden" ng-model="droplet.size">
-          <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="Provides {{size.disk}}GB SSD & {{size.memory}}MB of RAM at ${{size.price_monthly}}/m"> {{size.slug}}</span>
+      <div class="col-sm-2" ng-repeat="size in sizes">
+        <label class="btn" ng-model="droplet.size" btn-radio="'{{size.slug}}'" style="width: 100%; color: #000!important;" ng-class="{'btn-info':droplet.size==size.slug}" required>
+          <span class="glyphicon glyphicon-cog popover-trigger">
+            {{size.slug}}
+          </span>
         </label>
       </div>
     </div>
 
-    <div class="row"><div class="col-sm-12">Keys</div></div>
+    <div class="row"><div class="col-sm-12">Options</div></div>
     <div class="row">
-      <label class="checkbox-inline" ng-repeat="key in keys">
-        <input type="checkbox" name="ssh_keys[]" id="sshKey{{name}}" value="{{id}}" class="hidden" ng-model="droplet.key">
-        <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="{{fingerprint}}"> {{name}}</span>
-      </label>
+      <div class="col-sm-2">
+        <label class="btn" ng-model="droplet.ipv6" style="width: 100%; color: #000!important;" ng-class="{'btn-info':droplet.ipv6}" btn-checkbox>
+          <span class="glyphicon glyphicon-cog popover-trigger">
+            ipv6
+          </span>
+        </label>
+      </div>
+      <div class="col-sm-2">
+        <label class="btn" ng-model="droplet.backups" style="width: 100%; color: #000!important;" ng-class="{'btn-info':droplet.backups}" btn-checkbox>
+          <span class="glyphicon glyphicon-cog popover-trigger">
+            Backups
+          </span>
+        </label>
+      </div>
     </div>
 
-    <p class="clearfix">
-    <label class="checkbox-inline">
-      <input type="checkbox" name="ipv6" id="ipv6" value="true" class="hidden">
-      <span class="glyphicon glyphicon-cog popover-trigger" data-toggle="popover" data-trigger="hover" data-content="Enabled ipv6 on droplet?">ipv6</span>
-    </label>
-    </p>
-
-    <p>
-      <select name="image" class="form-control" ng-options="image.name for image in images" required></select>
-    </p>
-
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" value="">
-        Backups Enabled
-      </label>
+    <div class="row"><div class="col-sm-12">Image</div></div>
+    <div class="row">
+      <div class="col-sm-12">
+        <select name="image" class="form-control" ng-options="image.name for image in images" ng-model="droplet.image" required></select>
+      </div>
     </div>
+
     <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
   </form>
 </div>
