@@ -49,7 +49,9 @@
                 <select ng-model="droplet.actionType" ng-options="actionOption.name for actionOption in droplet.actionOptions" class="form-control" required style="width: 100%"></select>
                 <div ng-if="droplet.actionType.value=='rebuild'">
                   <select class="form-control" ng-model="droplet.image" ng-options="image.name for image in privateImages"></select>
-
+                </div>
+                <div ng-if="droplet.actionType.value=='resize'">
+                  <select class="form-control" ng-model="droplet.size" ng-options="size.slug for size in sizes"></select>
                 </div>
               </div>
               <br>

@@ -1,9 +1,12 @@
-@dom.controller 'DropletsController', ['$scope', '$timeout', '$route', 'Droplets', 'DropletActions', 'Images', 'BroadcastService', ($scope, $timeout, $route, Droplets, DropletActions, Images, BroadcastService) ->
+@dom.controller 'DropletsController', ['$scope', '$timeout', '$route', 'Droplets', 'DropletActions', 'Images', 'Sizes', 'BroadcastService', ($scope, $timeout, $route, Droplets, DropletActions, Images, Sizes, BroadcastService) ->
   $scope.droplets = []
   $scope.droplet  = {}
 
   Images.query {'private': true}, (data) ->
     $scope.privateImages = data.images
+
+  Sizes.query (data) ->
+    $scope.sizes = data.sizes
 
   $scope.dropletUpdate = ->
     Droplets.query((data) ->
@@ -57,6 +60,7 @@
     dropletActionValues = { type: droplet.actionType.value }
 
     dropletActionValues.image = droplet.image.id if droplet.actionType.value is 'rebuild'
+    dropletActionValues.size = droplet.size.slug if droplet.actionType.value is 'resize'
     console.log dropletActionValues
     DropletActions.save({droplet_id: droplet.id}, dropletActionValues, (response) ->
       BroadcastService('xhr-success', response.action.type+" "+response.action.status)
