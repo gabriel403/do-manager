@@ -1,7 +1,7 @@
 @dom.controller 'DropletsNewController', ['$scope', '$timeout', '$route', 'Droplets', 'Regions', 'Sizes', 'Images', 'BroadcastService', ($scope, $timeout, $route, Droplets, Regions, Sizes, Images, BroadcastService) ->
   $scope.droplet = {}
 
-  Images.query {'private': true}, (data) ->
+  Images.query {'private': true, 'per_page': 50}, (data) ->
     $scope.images = data.images
 
   Regions.query (data) ->
