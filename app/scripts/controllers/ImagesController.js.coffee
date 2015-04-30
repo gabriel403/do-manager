@@ -1,5 +1,5 @@
 @dom.controller 'ImagesController', ['$scope', '$timeout', '$route', 'Images', 'ImageActions', 'Regions', 'BroadcastService', ($scope, $timeout, $route, Images, ImageActions, Regions, BroadcastService) ->
-  Images.query {'private': true}, (data) ->
+  Images.query {'private': true, 'per_page': 50}, (data) ->
     $scope.privateImages = data.images
 
   Regions.query (data) ->

@@ -12,12 +12,12 @@
 
   $scope.storeAuth = ->
     if $scope.auth.toggleAuthStorage
-      $cookies.dom_auth = $scope.auth.personalToken
+      $cookies.put('dom_auth', $scope.auth.personalToken, {secure: true})
     else
-      $cookies.dom_auth = ''
+      $cookies.remove('dom_auth')
 
   if $cookies.dom_auth
-    $scope.auth.personalToken = $cookies.dom_auth
+    $scope.auth.personalToken = $cookies.get('dom_auth')
     $scope.auth.toggleAuthStorage = true
     $scope.updateAuth()
 ]

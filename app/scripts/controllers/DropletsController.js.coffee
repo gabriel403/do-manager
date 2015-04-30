@@ -61,10 +61,12 @@
 
     dropletActionValues.image = droplet.image.id if droplet.actionType.value is 'rebuild'
     dropletActionValues.size = droplet.size.slug if droplet.actionType.value is 'resize'
+    dropletActionValues.name = droplet.snapshot_name if droplet.actionType.value is 'snapshot'
     console.log dropletActionValues
+
     DropletActions.save({droplet_id: droplet.id}, dropletActionValues, (response) ->
       BroadcastService('xhr-success', response.action.type+" "+response.action.status)
-      droplet.actions.push(response.action)
+      droplet.actions.unshift(response.action);
       droplet.actionType = {}
     )
 

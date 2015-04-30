@@ -26,16 +26,16 @@
     </div>
     <div class="col-md-4">
       <dl class="dl-horizontal clearfix">
-        <dt style="width: 120px;"><small>Locked</small></dt>
-        <dd style="margin-left: 130px;"><small>{{droplet.locked}}</small></dd>
-        <dt style="width: 120px;"><small>Status</small></dt>
-        <dd style="margin-left: 130px;"><small>{{droplet.status}}</small></dd>
-        <dt style="width: 120px;"><small>Snapshots</small></dt>
-        <dd style="margin-left: 130px;"><small>{{droplet.snapshot_ids.length}}</small></dd>
-        <dt style="width: 120px;"><small>Backups Enabled</small></dt>
-        <dd style="margin-left: 130px;"><small>{{droplet.backup_ids.length>0}}</small></dd>
-        <dt ng-if="droplet.backup_ids.length>0" style="width: 120px;"><small>Backups</small></dt>
-        <dd ng-if="droplet.backup_ids.length>0" style="margin-left: 130px;"><small>{{droplet.backup_ids.length}}</small></dd>
+        <dt><small>Locked</small></dt>
+        <dd><small>{{droplet.locked}}</small></dd>
+        <dt><small>Status</small></dt>
+        <dd><small>{{droplet.status}}</small></dd>
+        <dt><small>Snapshots</small></dt>
+        <dd><small>{{droplet.snapshot_ids.length}}</small></dd>
+        <dt><small>Backups Enabled</small></dt>
+        <dd><small>{{droplet.features.indexOf('backups')>-1}}</small></dd>
+        <dt ng-if="droplet.backup_ids.length>0"><small>Backups</small></dt>
+        <dd ng-if="droplet.backup_ids.length>0"><small>{{droplet.backup_ids.length}}</small></dd>
       </dl>
     </div>
   </div>
@@ -53,6 +53,9 @@
                 <div ng-if="droplet.actionType.value=='resize'">
                   <select class="form-control" ng-model="droplet.size" ng-options="size.slug for size in sizes"></select>
                 </div>
+                <div ng-if="droplet.actionType.value=='snapshot'">
+                  <input type="text" class="form-control" ng-model="droplet.snapshot_name">
+                </div>
               </div>
               <br>
               <button type="submit" class="btn btn-default" ng-confirm-click="Are you sure?" ng-disabled="actionForm.$invalid || actionForm.$pristine" style="width: 100%" ng-click="submitActionForm(actionForm.$valid, droplet)">Submit</button>
@@ -61,11 +64,11 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <input class="btn btn-danger" type="button" value="Delete Droplet" ng-confirm-click="Are you sure?" ng-click="deleteVm(droplet.id)" style="width: 100%">
+          <input ng-if="!droplet.locked" class="btn btn-danger" type="button" value="Delete Droplet" ng-confirm-click="Are you sure?" ng-click="deleteVm(droplet.id)" style="width: 100%">
         </div>
       </div>
     </div>
-    <div class="col-md-8 col-md-offset-2" style="height: 100px;">
+    <div class="col-md-8 col-md-offset-2">
       <div class="row" ng-repeat="action in droplet.actions">
         <div class="col-md-2 col-md-offset-2">{{action.type}}</div>
         <div class="col-md-2">{{action.status}}</div>
